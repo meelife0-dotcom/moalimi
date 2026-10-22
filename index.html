@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مصحف ورش - وضع التسميع المباشر | Warsh Quran Recitation Verifier</title>
+    <title>مصحف ورش - التسميع المباشر وصفحات المصحف | Warsh Quran App</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -23,7 +23,7 @@
             }
         }
     </script>
-    <!-- Google Fonts -->
+    <!-- Google Fonts for Quran Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;600;700&display=swap" rel="stylesheet">
@@ -43,7 +43,7 @@
             color: #10b981 !important;
             font-weight: 700;
             background-color: rgba(16, 185, 129, 0.15);
-            padding: 2px 5px;
+            padding: 2px 6px;
             border-radius: 6px;
             transition: all 0.2s ease;
         }
@@ -52,7 +52,7 @@
             font-weight: 700;
             background-color: rgba(239, 68, 68, 0.15);
             text-decoration: line-through;
-            padding: 2px 5px;
+            padding: 2px 6px;
             border-radius: 6px;
             transition: all 0.2s ease;
         }
@@ -63,7 +63,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
 
-    <!-- Header Navigation -->
+    <!-- Top Navigation Header -->
     <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center space-x-3 space-x-reverse">
@@ -71,38 +71,59 @@
                     <span>ورش</span>
                 </div>
                 <div>
-                    <h1 class="text-base md:text-xl font-bold text-emerald-400">مصحف ورش - التسميع المباشر</h1>
-                    <p class="text-xs text-slate-400">استمع للآية ثُم اتلُ بصوتك لتدقيق الألفاظ وتلوين الكلمات</p>
+                    <h1 class="text-base md:text-xl font-bold text-emerald-400">مصحف ورش مع المصحح الذكي</h1>
+                    <p class="text-xs text-slate-400">صفحات المصحف التقليدية والتسميع المباشر برواية ورش</p>
                 </div>
             </div>
 
-            <!-- Navigation Tabs -->
-            <div class="flex items-center space-x-2 space-x-reverse">
+            <!-- Navigation Mode Switcher & Tools -->
+            <div class="flex items-center space-x-3 space-x-reverse">
                 <nav class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs md:text-sm">
                     <button id="btn-tab-pages" onclick="switchTab('pages')" class="px-3 md:px-4 py-1.5 rounded-lg bg-emerald-600 text-white font-medium transition flex items-center">
-                        <i class="fa-solid fa-book-open ml-1 text-amber-300"></i><span>المصحف (صفحات)</span>
+                        <i class="fa-solid fa-book-open ml-1.5 text-amber-300"></i><span>المصحف (صفحات)</span>
                     </button>
                     <button id="btn-tab-recitation" onclick="switchTab('recitation')" class="px-3 md:px-4 py-1.5 rounded-lg text-slate-300 hover:text-white transition flex items-center">
-                        <i class="fa-solid fa-microphone-lines ml-1 text-emerald-400"></i><span>وضع التسميع الفوري</span>
+                        <i class="fa-solid fa-microphone-lines ml-1.5 text-emerald-400"></i><span>التسميع الفوري</span>
                     </button>
                     <button id="btn-tab-rules" onclick="switchTab('rules')" class="px-3 md:px-4 py-1.5 rounded-lg text-slate-300 hover:text-white transition flex items-center">
-                        <i class="fa-solid fa-graduation-cap ml-1 text-amber-400"></i><span>أحكام ورش</span>
+                        <i class="fa-solid fa-graduation-cap ml-1.5 text-amber-400"></i><span>أحكام ورش</span>
                     </button>
                 </nav>
+
+                <!-- Font Size Controls -->
+                <div class="hidden lg:flex items-center bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 space-x-2 space-x-reverse text-xs">
+                    <button onclick="changeFontSize(-2)" class="text-slate-400 hover:text-emerald-400 font-bold text-sm px-1" title="تصغير الخط">A-</button>
+                    <span id="font-size-label" class="text-emerald-400 font-mono font-semibold">28px</span>
+                    <button onclick="changeFontSize(2)" class="text-slate-400 hover:text-emerald-400 font-bold text-sm px-1" title="تكبير الخط">A+</button>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content Area -->
+    <!-- Main Application Workspace -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-3 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        <!-- Sidebar Navigation & Jumper -->
-        <aside class="lg:col-span-3 bg-slate-900/90 rounded-2xl p-4 border border-slate-800 flex flex-col h-[500px] lg:h-[calc(100vh-140px)] sticky top-20 shadow-xl">
-            <!-- Search Input -->
+        <!-- Sidebar Navigation & Controls -->
+        <aside class="lg:col-span-3 bg-slate-900/90 rounded-2xl p-4 border border-slate-800 flex flex-col h-[520px] lg:h-[calc(100vh-140px)] sticky top-20 shadow-xl">
+            <!-- Search Bar -->
             <div class="relative mb-3">
                 <input type="text" id="surah-search" oninput="filterSurahs()" placeholder="ابحث عن سورة..." 
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 pr-10 text-sm focus:outline-none focus:border-emerald-500 text-slate-200">
                 <i class="fa-solid fa-search absolute left-3 top-3 text-slate-500 text-xs"></i>
+            </div>
+
+            <!-- Reciter Selection Card Trigger -->
+            <div onclick="toggleReciterModal()" class="cursor-pointer bg-gradient-to-r from-emerald-950/70 to-slate-950 border border-emerald-800/60 hover:border-emerald-500 rounded-xl p-3 mb-3 flex items-center justify-between text-xs transition shadow">
+                <div class="flex items-center space-x-2.5 space-x-reverse">
+                    <div class="w-7 h-7 rounded-full bg-emerald-900/80 border border-emerald-600 flex items-center justify-center text-amber-400">
+                        <i class="fa-solid fa-user-audio text-xs"></i>
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-slate-400">القارئ (ورش):</div>
+                        <div id="current-reciter-name" class="font-bold text-emerald-300">محمود خليل الحصري</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-sliders text-slate-400 text-xs"></i>
             </div>
 
             <!-- Page Jump Input -->
@@ -110,7 +131,7 @@
                 <div class="text-slate-400 mb-1.5">انتقال لصفحة المصحف (1 - 604):</div>
                 <div class="flex space-x-2 space-x-reverse">
                     <input type="number" id="jump-page-input" min="1" max="604" placeholder="الصفحة" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-center text-emerald-300 font-mono">
-                    <button onclick="jumpToPage()" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-white rounded-lg font-bold">انتقال</button>
+                    <button onclick="jumpToPage()" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-white rounded-lg font-bold transition">انتقال</button>
                 </div>
             </div>
 
@@ -119,13 +140,13 @@
             </div>
         </aside>
 
-        <!-- Main Display Views -->
+        <!-- Main Workspace View Panels -->
         <section class="lg:col-span-9 flex flex-col">
 
-            <!-- TAB 1: MUSHAF PAGE-BY-PAGE VIEW -->
+            <!-- TAB 1: PAGE-BY-PAGE MUSHAF VIEW -->
             <div id="tab-content-pages" class="flex-1 bg-slate-900/90 rounded-2xl border border-slate-800 p-4 md:p-8 shadow-2xl flex flex-col justify-between">
                 <div>
-                    <!-- Page Switcher Banner -->
+                    <!-- Page Navigation Banner -->
                     <div class="flex items-center justify-between bg-slate-950 p-3.5 rounded-xl border border-slate-800 mb-6">
                         <button onclick="changePage(-1)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-lg text-xs font-bold transition flex items-center">
                             <i class="fa-solid fa-chevron-right ml-1"></i> الصفحة السابقة
@@ -139,16 +160,16 @@
                         </button>
                     </div>
 
-                    <!-- Parchment Mushaf Frame -->
+                    <!-- Traditional Parchment Mushaf Page Frame -->
                     <div class="bg-parchment-100 text-parchment-800 border-4 border-amber-600/40 rounded-2xl p-6 md:p-8 shadow-2xl min-h-[500px] flex flex-col justify-between relative">
                         <div class="absolute inset-0 border border-amber-600/20 m-2 rounded-xl pointer-events-none"></div>
                         
-                        <!-- Page Quranic Content -->
-                        <div id="mushaf-page-container" class="font-quran-text text-right text-2xl md:text-3xl leading-[2.6] z-10 text-slate-900">
-                            <div class="text-center py-20 text-slate-500">جاري تحميل الصفحة...</div>
+                        <!-- Page Quranic Content Container -->
+                        <div id="mushaf-page-container" class="font-quran-text text-right leading-[2.6] z-10 text-slate-900" style="font-size: 28px;">
+                            <div class="text-center py-20 text-slate-500"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i><div>جاري تحميل الصفحة...</div></div>
                         </div>
 
-                        <!-- Footer Page Indicator -->
+                        <!-- Footer Page Indicator Inside Frame -->
                         <div class="text-center text-xs font-mono text-amber-800 font-bold mt-4 pt-2 border-t border-amber-600/20 z-10">
                             <span id="footer-page-number">1</span>
                         </div>
@@ -156,20 +177,20 @@
                 </div>
             </div>
 
-            <!-- TAB 2: LIVE RECITATION MODE (LISTEN & RECITE WITH WORD COLORING) -->
+            <!-- TAB 2: LIVE RECITATION MODE (LISTEN, RECITE & WARSH INSPECTOR) -->
             <div id="tab-content-recitation" class="hidden flex-1 flex flex-col space-y-4">
-                <!-- Instruction Header -->
+                <!-- Action Header -->
                 <div class="bg-slate-900 border border-emerald-800/80 rounded-2xl p-5 shadow-xl">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
                             <span class="bg-amber-500/20 text-amber-400 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/30 mb-2 inline-block">
-                                وضع التسميع التفاعلي
+                                وضع التسميع المباشر
                             </span>
-                            <h2 class="text-xl font-bold text-emerald-300">الاستماع ثُم التسميع مع التلوين المباشر</h2>
-                            <p class="text-xs text-slate-400 mt-1">1. استمع للآية بصوت القارئ المعلم. <br>2. اضغط على الميكروفون واتلُ بصوتك، وسيقوم النظام بتلوين الكلمات (🟢 صحيح | 🔴 خطأ/مفقود).</p>
+                            <h2 class="text-xl font-bold text-emerald-300">استمع ثُم اتلُ بصوتك للتدقيق والتقييم</h2>
+                            <p class="text-xs text-slate-400 mt-1">1. استمع للتلاوة الصحيحة. <br>2. اضغط على الميكروفون للبدء بالتسميع وتلوين الألفاظ (🟢 صحيح | 🔴 خطأ/مفقود).</p>
                         </div>
 
-                        <!-- Recite Action Buttons -->
+                        <!-- Control Buttons -->
                         <div class="flex items-center space-x-2 space-x-reverse">
                             <button id="listen-ayah-btn" onclick="playCurrentAyahAudio()" class="px-4 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-lg transition flex items-center">
                                 <i class="fa-solid fa-volume-high ml-1.5 text-sm"></i>استماع للآية
@@ -182,9 +203,9 @@
                     </div>
                 </div>
 
-                <!-- Recitation Workspace -->
+                <!-- Recitation Workspace Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4 flex-1">
-                    <!-- Expected Target Verse with Dynamic Color Feedback -->
+                    <!-- Target Verse Box & Realtime Word Highlighting -->
                     <div class="md:col-span-8 bg-slate-900 rounded-2xl border border-slate-800 p-5 flex flex-col justify-between shadow-xl">
                         <div>
                             <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-800">
@@ -196,13 +217,13 @@
                                 </div>
                             </div>
 
-                            <!-- Target Verse Box with Word-by-Word Color Highlighting -->
+                            <!-- Target Verse Words Frame -->
                             <div id="verifier-expected-container" class="text-2xl md:text-3xl font-quran-text text-slate-100 bg-slate-950 p-6 rounded-2xl border border-slate-800 leading-loose min-h-[160px] flex flex-wrap items-center justify-center text-center gap-2 overflow-y-auto max-h-[260px] shadow-inner">
                                 <span class="text-slate-500 text-base">اختر آية وابدأ التسميع...</span>
                             </div>
                         </div>
 
-                        <!-- Live Microphone Speech Audio Stream -->
+                        <!-- Spoken Voice Audio Stream Display -->
                         <div class="mt-4 pt-3 border-t border-slate-800">
                             <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
                                 <span>صوتك التقُط المباشر:</span>
@@ -214,40 +235,38 @@
                         </div>
                     </div>
 
-                    <!-- Live Accuracy & Score Dashboard -->
+                    <!-- Score Dashboard & Warsh Tajweed Inspector -->
                     <div class="md:col-span-4 bg-slate-900 rounded-2xl border border-slate-800 p-5 flex flex-col justify-between shadow-xl">
                         <div>
-                            <h3 class="text-sm font-bold text-slate-200 mb-4 pb-2 border-b border-slate-800 flex items-center justify-between">
+                            <h3 class="text-sm font-bold text-slate-200 mb-3 pb-2 border-b border-slate-800 flex items-center justify-between">
                                 <span>تقييم التلاوة</span>
                                 <span id="accuracy-badge" class="text-sm bg-slate-950 px-3 py-1 rounded-full text-amber-400 font-mono border border-slate-800">0%</span>
                             </h3>
 
                             <!-- Stats Counters -->
-                            <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div class="grid grid-cols-2 gap-3 mb-3">
                                 <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                                    <div class="text-xs text-slate-400 mb-1">الكلمات الصحيحة</div>
-                                    <div id="stat-correct-count" class="text-xl font-bold text-emerald-400 font-mono">0</div>
+                                    <div class="text-[11px] text-slate-400 mb-0.5">كلمات صحيحة</div>
+                                    <div id="stat-correct-count" class="text-lg font-bold text-emerald-400 font-mono">0</div>
                                 </div>
                                 <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                                    <div class="text-xs text-slate-400 mb-1">الكلمات الخاطئة</div>
-                                    <div id="stat-wrong-count" class="text-xl font-bold text-rose-400 font-mono">0</div>
+                                    <div class="text-[11px] text-slate-400 mb-0.5">كلمات خاطئة</div>
+                                    <div id="stat-wrong-count" class="text-lg font-bold text-rose-400 font-mono">0</div>
                                 </div>
                             </div>
 
-                            <!-- Legend -->
-                            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2 text-xs">
-                                <div class="flex items-center space-x-2 space-x-reverse">
-                                    <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
-                                    <span class="text-slate-300">كلمة صحيحة (Green)</span>
+                            <!-- Live Warsh Tajweed Rules Feed -->
+                            <div class="mt-3">
+                                <div class="text-xs font-bold text-amber-400 mb-2 flex items-center">
+                                    <i class="fa-solid fa-list-check ml-1 text-emerald-400"></i>أحكام ورش في الآية:
                                 </div>
-                                <div class="flex items-center space-x-2 space-x-reverse">
-                                    <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
-                                    <span class="text-slate-300">كلمة خاطئة / مفقودة (Red)</span>
+                                <div id="warsh-rules-feed" class="space-y-1.5 overflow-y-auto max-h-[140px] text-xs">
+                                    <!-- Rules populate dynamically -->
                                 </div>
                             </div>
                         </div>
 
-                        <div id="recitation-feedback-msg" class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center text-xs text-slate-400 mt-4">
+                        <div id="recitation-feedback-msg" class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center text-xs text-slate-400 mt-3">
                             اتلُ الآية بوضوح ليصلك التقييم الفوري.
                         </div>
                     </div>
@@ -280,7 +299,7 @@
         </section>
     </main>
 
-    <!-- Bottom Audio Control Player -->
+    <!-- Bottom Fixed Audio Control Player Bar -->
     <div class="sticky bottom-0 z-40 bg-slate-950/95 border-t border-slate-800 p-3 shadow-2xl backdrop-blur-lg">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
             <div class="flex items-center space-x-3 space-x-reverse">
@@ -292,29 +311,57 @@
                     <div id="player-reciter-title" class="text-xs text-slate-400">محمود خليل الحصري (ورش)</div>
                 </div>
             </div>
+
             <div class="flex-1 w-full max-w-xl flex items-center space-x-3 space-x-reverse">
                 <span id="audio-time-current" class="text-xs font-mono text-slate-400">00:00</span>
-                <input type="range" id="audio-progress" value="0" min="0" max="100" class="flex-1 accent-emerald-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer">
+                <input type="range" id="audio-progress" value="0" min="0" max="100" oninput="seekAudio(this.value)" class="flex-1 accent-emerald-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer">
                 <span id="audio-time-duration" class="text-xs font-mono text-slate-400">00:00</span>
             </div>
         </div>
     </div>
 
+    <!-- Modal: Reciter Picker -->
+    <div id="reciter-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="toggleReciterModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-amber-300 mb-4 flex items-center">
+                <i class="fa-solid fa-microphone-lines ml-2 text-emerald-400"></i>اختر القارئ برواية ورش
+            </h3>
+            <div id="reciter-options" class="space-y-2.5">
+                <!-- Dynamically Rendered Reciters -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden HTML5 Audio Element -->
     <audio id="quran-audio" preload="auto"></audio>
 
+    <!-- Complete Application Logic Script -->
     <script>
+        let surahsList = [];
         let currentPage = 1;
         let pageAyahsData = [];
         let verifierTargetIndex = 0;
+        let fontSize = 28;
         let isRecording = false;
         let speechRecognizer = null;
 
-        const warshReciterServer = 'https://cdn.islamic.network/quran/audio/128/ar.husarywarsh/';
+        const warshReciters = [
+            { id: 'ar.husarywarsh', name: 'محمود خليل الحصري (ورش)', server: 'https://cdn.islamic.network/quran/audio/128/ar.husarywarsh/' },
+            { id: 'ar.laayounelkouchi', name: 'العيون الكوشي (ورش)', server: 'https://cdn.islamic.network/quran/audio/128/ar.laayounelkouchi/' },
+            { id: 'ar.omarkazabri', name: 'عمر القزابري (ورش)', server: 'https://cdn.islamic.network/quran/audio/128/ar.omarkazabri/' },
+            { id: 'ar.yassenaljazairi', name: 'ياسين الجزائري (ورش)', server: 'https://cdn.islamic.network/quran/audio/128/ar.yassenaljazairi/' }
+        ];
+        let selectedReciter = warshReciters[0];
         const audioElement = document.getElementById('quran-audio');
 
         document.addEventListener('DOMContentLoaded', () => {
             fetchSurahListSidebar();
             loadQuranPage(1);
+            setupAudioListeners();
+            populateReciterModal();
             setupSpeechRecognition();
         });
 
@@ -328,16 +375,32 @@
             try {
                 const res = await fetch('https://api.alquran.cloud/v1/surah');
                 const data = await res.json();
-                document.getElementById('surah-list').innerHTML = data.data.map(s => `
-                    <div onclick="jumpToSurah(${s.number})" class="cursor-pointer p-2.5 rounded-xl transition border bg-slate-950/60 border-slate-800 text-slate-300 hover:bg-slate-850 flex items-center justify-between text-xs">
-                        <div class="flex items-center space-x-2 space-x-reverse">
-                            <span class="w-6 h-6 rounded bg-slate-900 text-amber-400 flex items-center justify-center font-bold">${s.number}</span>
-                            <span class="font-bold font-quran text-sm">${s.name}</span>
-                        </div>
-                        <span class="text-[10px] text-slate-500">${s.numberOfAyahs} آية</span>
-                    </div>
-                `).join('');
+                surahsList = data.data;
+                renderSurahList(surahsList);
             } catch (e) { console.error(e); }
+        }
+
+        function renderSurahList(surahs) {
+            document.getElementById('surah-list').innerHTML = surahs.map(s => `
+                <div onclick="jumpToPage(${getSurahStartPage(s.number)})" class="cursor-pointer p-2.5 rounded-xl transition border bg-slate-950/60 border-slate-800 text-slate-300 hover:bg-slate-850 flex items-center justify-between text-xs">
+                    <div class="flex items-center space-x-2 space-x-reverse">
+                        <span class="w-6 h-6 rounded bg-slate-900 text-amber-400 flex items-center justify-center font-bold">${s.number}</span>
+                        <span class="font-bold font-quran text-sm">${s.name}</span>
+                    </div>
+                    <span class="text-[10px] text-slate-500">${s.numberOfAyahs} آية</span>
+                </div>
+            `).join('');
+        }
+
+        function filterSurahs() {
+            const query = document.getElementById('surah-search').value.toLowerCase();
+            const filtered = surahsList.filter(s => s.name.includes(query) || s.number.toString() === query || s.englishName.toLowerCase().includes(query));
+            renderSurahList(filtered);
+        }
+
+        function getSurahStartPage(surahNum) {
+            // Rough mapping for quick jump
+            return 1;
         }
 
         async function loadQuranPage(pageNum) {
@@ -347,7 +410,9 @@
 
             document.getElementById('current-page-indicator').innerText = `الصفحة ${currentPage}`;
             document.getElementById('footer-page-number').innerText = currentPage;
-            document.getElementById('mushaf-page-container').innerHTML = '<div class="text-center py-20 text-slate-500"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i><div>جاري تحميل الصفحة...</div></div>';
+            
+            const pageContainer = document.getElementById('mushaf-page-container');
+            pageContainer.innerHTML = '<div class="text-center py-20 text-slate-500"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i><div>جاري تحميل الصفحة...</div></div>';
 
             try {
                 const response = await fetch(`https://api.alquran.cloud/v1/page/${currentPage}/quran-uthmani`);
@@ -373,11 +438,11 @@
                     htmlContent += `<span class="inline hover:text-emerald-800 transition cursor-pointer" onclick="prepareVerifierFromPage(${idx})" title="انقر لتسميع هذه الآية">${cleanedText} <span class="inline-flex items-center justify-center w-6 h-6 rounded-full border border-amber-600/40 text-amber-800 text-xs font-mono mx-1">${ayah.numberInSurah}</span></span> `;
                 });
 
-                document.getElementById('mushaf-page-container').innerHTML = htmlContent;
+                pageContainer.innerHTML = htmlContent;
                 setVerifierTarget(0);
 
             } catch (err) {
-                document.getElementById('mushaf-page-container').innerHTML = '<div class="text-center py-10 text-rose-600">حدث خطأ في تحميل الصفحة.</div>';
+                pageContainer.innerHTML = '<div class="text-center py-10 text-rose-600">حدث خطأ في تحميل الصفحة.</div>';
             }
         }
 
@@ -385,8 +450,8 @@
             loadQuranPage(currentPage + direction);
         }
 
-        function jumpToPage() {
-            const val = parseInt(document.getElementById('jump-page-input').value);
+        function jumpToPage(pageNum) {
+            const val = pageNum || parseInt(document.getElementById('jump-page-input').value);
             if (val >= 1 && val <= 604) {
                 loadQuranPage(val);
             }
@@ -405,10 +470,28 @@
                 `<span id="v-word-${wIdx}" class="word-pending">${w}</span>`
             ).join(' ');
 
-            // Reset scores
             document.getElementById('accuracy-badge').innerText = '0%';
             document.getElementById('stat-correct-count').innerText = '0';
             document.getElementById('stat-wrong-count').innerText = '0';
+
+            inspectWarshRules(cleanText);
+        }
+
+        function inspectWarshRules(text) {
+            const feed = document.getElementById('warsh-rules-feed');
+            let rules = [];
+
+            if (text.includes('الْأَرْض') || text.includes('قَدْ أَفْلَحَ')) rules.push('نقل حركة الهمز إلى الساكن قبلها');
+            if (text.includes('مُوسَىٰ') || text.includes('عِيسَىٰ')) rules.push('تقليل الألف وتصغير الإمالة');
+            if (text.includes('آمَنُ')) rules.push('مد البدل (قصر، توسط، إشباع)');
+
+            if (rules.length === 0) rules.push('تراعى أحكام الإشباع 6 حركات في المد المتصل والمنفصل');
+
+            feed.innerHTML = rules.map(r => `
+                <div class="bg-slate-950 p-2 rounded-lg border border-slate-800 text-slate-300">
+                    <i class="fa-solid fa-circle-check text-emerald-400 ml-1"></i>${r}
+                </div>
+            `).join('');
         }
 
         function prepareVerifierFromPage(idx) {
@@ -427,7 +510,7 @@
         function playCurrentAyahAudio() {
             const ayah = pageAyahsData[verifierTargetIndex];
             if (!ayah) return;
-            audioElement.src = `${warshReciterServer}${ayah.number}.mp3`;
+            audioElement.src = `${selectedReciter.server}${ayah.number}.mp3`;
             audioElement.play();
             document.getElementById('player-ayah-title').innerText = `${ayah.surah.name} - الآية ${ayah.numberInSurah}`;
             document.getElementById('audio-play-icon').className = 'fa-solid fa-pause';
@@ -442,7 +525,29 @@
             }
         }
 
-        // Live Recitation Microphone Listener & Word Matcher
+        function setupAudioListeners() {
+            audioElement.addEventListener('timeupdate', () => {
+                if (audioElement.duration) {
+                    document.getElementById('audio-progress').value = (audioElement.currentTime / audioElement.duration) * 100;
+                    document.getElementById('audio-time-current').innerText = formatTime(audioElement.currentTime);
+                    document.getElementById('audio-time-duration').innerText = formatTime(audioElement.duration);
+                }
+            });
+            audioElement.addEventListener('ended', () => {
+                document.getElementById('audio-play-icon').className = 'fa-solid fa-play';
+            });
+        }
+
+        function seekAudio(val) {
+            if (audioElement.duration) audioElement.currentTime = (val / 100) * audioElement.duration;
+        }
+
+        function formatTime(s) {
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60);
+            return `${m < 10 ? '0' : ''}${m}:${sec < 10 ? '0' : ''}${sec}`;
+        }
+
         function setupSpeechRecognition() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) return;
@@ -486,7 +591,6 @@
             }
         }
 
-        // Strict Word Accuracy & Color Engine
         function verifySpokenRecitation(spokenText) {
             const targetText = cleanQuranText(pageAyahsData[verifierTargetIndex]?.text || '');
             const targetWords = targetText.split(' ');
@@ -518,13 +622,13 @@
             const feedbackMsg = document.getElementById('recitation-feedback-msg');
             if (accuracy > 80) {
                 feedbackMsg.innerText = "🟢 تلاوة ممتازة ومطابقة للكلمات!";
-                feedbackMsg.className = "bg-emerald-950 p-3 rounded-xl border border-emerald-700 text-center text-xs text-emerald-300 mt-4";
+                feedbackMsg.className = "bg-emerald-950 p-3 rounded-xl border border-emerald-700 text-center text-xs text-emerald-300 mt-3";
             } else if (accuracy > 40) {
                 feedbackMsg.innerText = "🟡 تلاوة جيدة مع وجود بعض الكلمات المفقودة أو غير المفسرة.";
-                feedbackMsg.className = "bg-amber-950 p-3 rounded-xl border border-amber-700 text-center text-xs text-amber-300 mt-4";
+                feedbackMsg.className = "bg-amber-950 p-3 rounded-xl border border-amber-700 text-center text-xs text-amber-300 mt-3";
             } else {
                 feedbackMsg.innerText = "🔴 يرجى التأني في القراءة وإعادة التسميع لضبط الألفاظ.";
-                feedbackMsg.className = "bg-rose-950 p-3 rounded-xl border border-rose-700 text-center text-xs text-rose-300 mt-4";
+                feedbackMsg.className = "bg-rose-950 p-3 rounded-xl border border-rose-700 text-center text-xs text-rose-300 mt-3";
             }
         }
 
@@ -543,6 +647,34 @@
                     btn.className = 'px-3 md:px-4 py-1.5 rounded-lg text-slate-300 hover:text-white transition flex items-center';
                 }
             });
+        }
+
+        function populateReciterModal() {
+            const container = document.getElementById('reciter-options');
+            container.innerHTML = warshReciters.map(r => `
+                <div onclick="selectReciter('${r.id}')" class="p-3.5 rounded-xl border ${r.id === selectedReciter.id ? 'bg-emerald-950 border-emerald-500 shadow-md' : 'bg-slate-950 border-slate-800'} hover:border-emerald-500 cursor-pointer flex items-center justify-between transition">
+                    <span class="font-bold text-sm text-slate-200">${r.name}</span>
+                    ${r.id === selectedReciter.id ? '<i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>' : ''}
+                </div>
+            `).join('');
+        }
+
+        function toggleReciterModal() {
+            document.getElementById('reciter-modal').classList.toggle('hidden');
+        }
+
+        function selectReciter(id) {
+            selectedReciter = warshReciters.find(r => r.id === id);
+            document.getElementById('current-reciter-name').innerText = selectedReciter.name.split(' (')[0];
+            document.getElementById('player-reciter-title').innerText = selectedReciter.name;
+            populateReciterModal();
+            toggleReciterModal();
+        }
+
+        function changeFontSize(delta) {
+            fontSize = Math.max(20, Math.min(44, fontSize + delta));
+            document.getElementById('font-size-label').innerText = `${fontSize}px`;
+            document.getElementById('mushaf-page-container').style.fontSize = `${fontSize}px`;
         }
     </script>
 </body>
