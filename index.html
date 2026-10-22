@@ -483,7 +483,11 @@
         function setVerifierAyahTarget(idx) {
             if (!currentVersesData[idx]) return;
             verifierTargetIndex = idx;
-            const ayah = currentVersesData[idx];
+            // تنظيف النص من الرموز الخاصة التي تسبب ظهور حرف "ش" أو المربعات
+function fixQuranText(text) {
+    return text.replace(/[\u0670\u0671]/g, 'ا') // تحويل الألف الخنجرية والهمزة الموصولة إلى ألف عادية
+               .replace(/[\u06D6-\u06ED]/g, ''); // إزالة علامات الوقف والرموز الخاصة بالرسم العثماني غير المدعومة
+}
             const surahName = surahsList.find(s => s.number === currentSurahNumber).name;
 
             document.getElementById('verifier-ayah-ref').innerText = `${surahName} - الآية ${ayah.numberInSurah}`;
